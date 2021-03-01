@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Задачи на день{% endblock %}
+
+{% block main_content %}
+  {% if category %}
+  <h1>Задачи категории "{{ category.name }}"</h1>
+  {% else %}
+  <h1>Все текущие задачи</h1>
+  {% endif %}
+    {% for t in categories %}
+      {% if forloop.first %}
+      <ul class="list-inline">
+        <li class="list-inline-item">Все категории:</li>
+      {% endif %}
+      <li class="list-inline-item">
+        <a href="{% url "tasks:list_by_cat" t.slug %}">
+        {% if t.pk == tag.pk %}
+          <span class="badge badge-success">{{ t.name }}</span>
+        {% else %}
+          <span class="badge badge-info">{{ t.name }}</span>
+        {% endif %}
+        </a>
+      </li>
+    {% if forloop.last %}</ul>{% endif %}
+    {% endfor %}
+  <hr/>
+
+  <ul id="todo-list">
+  {% for task in tasks %}
+    {% if task.is_completed %}
+    <li class="completed">
+      <input class='checkbox' data-uid={{ task.id }} type='checkbox' disabled='disabled' checked='checked'/>
+    {% endif %}
+      {% if task.priority == task.PRIORITY_HIGH %}
+      <span class="badge badge-pill badge-danger">&nbsp;</span>
+      {% elif task.priority == task.PRIORITY_MEDIUM %}
+      <span class="badge badge-pill badge-secondary">&nbsp;</span>
+      {% elif task.priority == task.PRIORITY_LOW %}
+      <span class="badge badge-pill badge-success">&nbsp;</span>
+      {% endif %}
+      <a href={% url "tasks:details" task.id %}>{{ task }}</a>
+      <hr/>
+    </li>
+  {% endfor %}
+  </ul>
+{% endblock %}

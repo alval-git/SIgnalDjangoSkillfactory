@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Информация по категориям{% endblock %}
+
+{% block main_content %}
+  <h1>Категории и числа</h1>
+  <ul>
+  {% for category in categories %}
+    <li><span class="badge badge-info">{{ category.name }}: {{ category.todos_count }}</span></li>
+  {% empty %}
+    <li>Список задач по категориям пуст. Попробуйте добавить их из админки</li>
+  {% endfor %}
+  </ul>
+
+  <h1> Приоритеты</h1>
+  <ul>
+  {% for priority in priorities %}
+    <li><span class="badge badge-info">{{ priority.priority_name }}: {{ priority.priority_count }}</span></li>
+  {% empty %}
+    <li>Список задач по категориям пуст. Попробуйте добавить их из админки</li>
+  {% endfor %}
+  </ul>
+{% endblock %}

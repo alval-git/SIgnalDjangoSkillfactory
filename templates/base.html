@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <title>{% block title %}PWS Todo example app{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    {% block extra_head %}{% endblock %}
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+
+        <div class="side_bar col">
+          {% block side_bar %}
+            {% if user.is_authenticated %}
+              <p>{{ user.first_name }}</p>
+              <p>Login: {{ user.username }}</p>
+
+              <i class="fas fa-clipboard-list"></i>&nbsp;<a href="{% url "tasks:list" %}">задачи</a>
+            {% endif %}
+	    <i class="fas fa-cog"></i>&nbsp;<a href='{% url 'admin:index' %}'>админка</a>
+          {% endblock %}
+        </div>
+
+        <div class="main_content col-8">
+          {% block main_content %}
+          {% endblock %}
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>
